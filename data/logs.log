@@ -1,0 +1,52 @@
+INFO - 15:30:43: Tensorflow version: 1.13.1
+INFO - 15:30:43: Loading word2vec model...
+INFO - 15:30:43: loading projection weights from saved_models/ruwikiruscorpora_upos_skipgram_300_2_2019/model.bin
+INFO - 15:31:13: loaded (248978, 300) matrix from saved_models/ruwikiruscorpora_upos_skipgram_300_2_2019/model.bin
+INFO - 15:31:13: word2vec model loaded
+INFO - 15:31:13: Loading KMeans model...
+INFO - 15:31:15: Using default config.
+INFO - 15:31:15: Using config: {'_model_dir': 'saved_models/classifier (rusvectores)', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+graph_options {
+  rewrite_options {
+    meta_optimizer_iterations: ONE
+  }
+}
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x0000016B7AE95128>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO - 15:31:15: ----------------- PREDICTION FROM CLASSIFIER -----------------
+INFO - 15:31:15: Batch 1 from 1
+INFO - 15:31:15: Parsing charters (lemmatizing and one-hot vectors creating) started...
+INFO - 15:31:15: Collecting labels...
+INFO - 15:31:15: Lemmatizing started...
+INFO - 15:31:15: Lemmatizing: loading the model...
+INFO - 15:31:20: Lemmatizing: processing input...
+INFO - 15:31:21: Converting to one-hot vectors...
+INFO - 15:31:21: Converting to one-hot vectors... 1/8
+INFO - 15:31:22: Converting to one-hot vectors... 3/8
+INFO - 15:31:22: Converting to one-hot vectors... 5/8
+INFO - 15:31:22: Converting to one-hot vectors... 7/8
+INFO - 15:31:23: Converting to one-hot vectors... 8/8
+INFO - 15:31:23: Parsing charters (lemmatizing and one-hot vectors creating) finished
+WARNING - 15:31:23: From C:\Users\Emily\AppData\Local\Programs\Python\Python37\lib\site-packages\tensorflow\python\framework\op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+WARNING - 15:31:23: From C:\Users\Emily\AppData\Local\Programs\Python\Python37\lib\site-packages\tensorflow_estimator\python\estimator\inputs\queues\feeding_queue_runner.py:62: QueueRunner.__init__ (from tensorflow.python.training.queue_runner_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+To construct input pipelines, use the `tf.data` module.
+WARNING - 15:31:23: From C:\Users\Emily\AppData\Local\Programs\Python\Python37\lib\site-packages\tensorflow_estimator\python\estimator\inputs\queues\feeding_functions.py:500: add_queue_runner (from tensorflow.python.training.queue_runner_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+To construct input pipelines, use the `tf.data` module.
+INFO - 15:31:23: Calling model_fn.
+WARNING - 15:31:23: From C:\Users\Emily\AppData\Local\Programs\Python\Python37\lib\site-packages\tensorflow\python\feature_column\feature_column_v2.py:2703: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+INFO - 15:31:23: Done calling model_fn.
+INFO - 15:31:24: Graph was finalized.
+WARNING - 15:31:24: From C:\Users\Emily\AppData\Local\Programs\Python\Python37\lib\site-packages\tensorflow\python\training\saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.
+INFO - 15:31:24: Restoring parameters from saved_models/classifier (rusvectores)\model.ckpt-1000
+INFO - 15:31:24: Running local_init_op.
+INFO - 15:31:24: Done running local_init_op.
+WARNING - 15:31:24: From C:\Users\Emily\AppData\Local\Programs\Python\Python37\lib\site-packages\tensorflow\python\training\monitored_session.py:809: start_queue_runners (from tensorflow.python.training.queue_runner_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+To construct input pipelines, use the `tf.data` module.
