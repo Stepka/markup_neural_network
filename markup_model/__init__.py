@@ -635,6 +635,7 @@ def train():
         if len(test_file_names) <= 0:
             test_file_names = random.choices(train_and_test_file_names)
     else:
+        test_file_names = []
         log("There are no files at the 'Train' folder")
 
     if START_STAGE >= 3:
