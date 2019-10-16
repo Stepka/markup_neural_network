@@ -624,6 +624,10 @@ def train():
     )
 
     train_and_test_path = data_root_path + "Train"
+
+    if not os.path.exists(train_and_test_path):
+        os.mkdir(train_and_test_path)
+
     train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
 
     test_file_names = random.choices(train_and_test_file_names, k=int(0.2 * len(train_and_test_file_names)))
@@ -752,6 +756,9 @@ def predict(classifier_model, texts=None):
 
             # Take files from Evaluate
             prediction_path = data_root_path + "Evaluate"
+
+            if not os.path.exists(prediction_path):
+                os.mkdir(prediction_path)
 
             all_prediction_file_names = []
             for dir in os.listdir(prediction_path):
