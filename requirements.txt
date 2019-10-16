@@ -1,0 +1,9 @@
+pandas
+pandas_ods_reader
+gensim
+ufal.udpipe
+wget
+sklearn
+tensorflow
+joblib
+numpy

@@ -1,0 +1,7 @@
+/ontology_parser.iml
+.idea
+__pycache__
+*.ods
+*.csv
+/udpipe_syntagrus.model
+/security
