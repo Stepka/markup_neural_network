@@ -630,9 +630,12 @@ def train():
 
     train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
 
-    test_file_names = random.choices(train_and_test_file_names, k=int(0.2 * len(train_and_test_file_names)))
-    if len(test_file_names) <= 0:
-        test_file_names = random.choices(train_and_test_file_names)
+    if len(train_and_test_file_names) > 0:
+        test_file_names = random.choices(train_and_test_file_names, k=int(0.2 * len(train_and_test_file_names)))
+        if len(test_file_names) <= 0:
+            test_file_names = random.choices(train_and_test_file_names)
+    else:
+        log("There are no files at the 'Train' folder")
 
     if START_STAGE >= 3:
         # Load model
