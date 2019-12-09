@@ -4,6 +4,12 @@ import xml.etree.ElementTree as ET
 
 
 if __name__ == '__main__':
+
+    magic = '''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" [
+            <!ENTITY nbsp ' '>
+            ]>'''
+
     # Configuration
     start_time = time()
     try:
@@ -13,7 +19,7 @@ if __name__ == '__main__':
 
             file_content = f.read()
 
-            file_content = '<root>' + file_content + '</root>'
+            file_content = magic + '<root>' + file_content + '</root>'
 
             print(file_content)
 
@@ -22,7 +28,7 @@ if __name__ == '__main__':
             root = ET.fromstring(file_content)
 
             body_content = root.find("./body").text
-            body_content = '<root>' + body_content + '</root>'
+            body_content = magic + '<root>' + body_content + '</root>'
 
             print(body_content)
 
