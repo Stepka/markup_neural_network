@@ -202,7 +202,7 @@ def get_onehot(paragraph):
 
 
 # get all paragraphs from charter, lemmatize words inside and get onehot vectors for each paragraph
-def load_charters(path, file_names):
+def load_charters(file_names):
 
     log("Loading charters started...")
 
@@ -214,7 +214,7 @@ def load_charters(path, file_names):
         log(filename)
         if filename[-3:] == 'ods':
             try:
-                df = read_ods(path + "/" + filename, 1)
+                df = read_ods(filename, 1)
                 df = df[~pd.isna(df[df.columns[0]])]
                 df = df.astype({df.columns[0]: str})
 
@@ -227,7 +227,7 @@ def load_charters(path, file_names):
 
         elif filename[-3:] == 'txt':
             try:
-                with open(path + "/" + filename, encoding='utf-8') as f:
+                with open(filename, encoding='utf-8') as f:
                     lines = f.readlines()
 
                 for line in lines:
@@ -551,8 +551,14 @@ def load_word2vec_model():
 
         # train_and_test_path = data_root_path + "Train"
         train_and_test_path = config['word2vec']['train_path']
-        train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
-        pre_labels, texts = load_charters(train_and_test_path, train_and_test_file_names)
+        # train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
+        train_and_test_file_names = []
+        for path, sub_dirs, files in os.walk(train_and_test_path):
+            for name in files:
+                if os.path.isfile(os.path.join(path, name)):
+                    train_and_test_file_names.extend(os.path.join(path, name))
+
+        pre_labels, texts = load_charters(train_and_test_file_names)
         lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
 
         t = time()
@@ -629,7 +635,12 @@ def train():
     if not os.path.exists(train_and_test_path):
         os.mkdir(train_and_test_path)
 
-    train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
+    # train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
+    train_and_test_file_names = []
+    for path, sub_dirs, files in os.walk(train_and_test_path):
+        for name in files:
+            if os.path.isfile(os.path.join(path, name)):
+                train_and_test_file_names.extend(os.path.join(path, name))
 
     if len(train_and_test_file_names) > 0:
         test_file_names = random.choices(train_and_test_file_names, k=int(0.2 * len(train_and_test_file_names)))
@@ -665,7 +676,7 @@ def train():
         log("Train files num: {}, test files num: {}, total num: {}".format(
             len(train_file_names), len(test_file_names), len(train_and_test_file_names)))
 
-        pre_labels, texts = load_charters(train_and_test_path, train_file_names)
+        pre_labels, texts = load_charters(train_file_names)
         lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
         labels, charter_onehots, _ = make_one_hots(lemmatized_paragraphs, pre_labels)
 
@@ -712,7 +723,7 @@ def test(classifier_model, train_and_test_path, test_file_names):
         log("----------------- TESTING CLASSIFIER -----------------")
 
         test_file_names.sort()
-        pre_labels, texts = load_charters(train_and_test_path, test_file_names)
+        pre_labels, texts = load_charters(test_file_names)
         lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
         labels, charter_onehots, _ = make_one_hots(lemmatized_paragraphs, pre_labels)
 
@@ -766,9 +777,15 @@ def predict(classifier_model, texts=None):
                 os.mkdir(prediction_path)
 
             all_prediction_file_names = []
-            for dir in os.listdir(prediction_path):
-                all_prediction_file_names.extend([dir + "/" + f for f in os.listdir(prediction_path + "/" + dir) if os.path.isfile(os.path.join(prediction_path + "/" + dir, f))])
+            # for dir in os.listdir(prediction_path):
+            #     all_prediction_file_names.extend([dir + "/" + f for f in os.listdir(prediction_path + "/" + dir) if os.path.isfile(os.path.join(prediction_path + "/" + dir, f))])
+            # all_prediction_file_names.sort()
+            for path, sub_dirs, files in os.walk(prediction_path):
+                for name in files:
+                    if os.path.isfile(os.path.join(path, name)):
+                        all_prediction_file_names.extend(os.path.join(path, name))
             all_prediction_file_names.sort()
+
 
             predict_batch_size = 500
             predict_batch_num = int(len(all_prediction_file_names) / predict_batch_size) + 1
@@ -778,7 +795,7 @@ def predict(classifier_model, texts=None):
 
                 prediction_file_names = all_prediction_file_names[i * predict_batch_size:(i + 1) * predict_batch_size]
 
-                pre_labels, batched_texts = load_charters(prediction_path, prediction_file_names)
+                pre_labels, batched_texts = load_charters(prediction_file_names)
                 lemmatized_paragraphs, _ = parse_charters(pre_labels, batched_texts)
                 _, predict_charter_one_hots, _ = make_one_hots(lemmatized_paragraphs)
 
