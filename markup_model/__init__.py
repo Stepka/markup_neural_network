@@ -12,6 +12,8 @@ import random
 from time import time
 import re
 import shutil
+import gzip
+from bs4 import BeautifulSoup
 
 from sklearn.cluster import KMeans
 import tensorflow as tf
@@ -236,6 +238,18 @@ def load_charters(file_names):
                     if len(line) > 0:
                         pre_labels.append(0)
                         texts.append(line)
+            except Exception as e:
+                log("Error on file")
+                log(e)
+                log(filename)
+
+        elif filename[-6:] == 'xml.gz':
+            try:
+                with gzip.open(filename, 'rt') as f:
+                    file_content = f.read()
+                    soup = BeautifulSoup(file_content, 'html.parser')
+                    body_soup = BeautifulSoup(soup.body.string, 'html.parser')
+                    texts.append(body_soup.get_text())
             except Exception as e:
                 log("Error on file")
                 log(e)
@@ -555,6 +569,7 @@ def load_word2vec_model():
         train_and_test_file_names = []
         for path, sub_dirs, files in os.walk(train_and_test_path):
             for name in files:
+                print(name, os.path.join(path, name))
                 if os.path.isfile(os.path.join(path, name)):
                     train_and_test_file_names.append(os.path.join(path, name))
 
