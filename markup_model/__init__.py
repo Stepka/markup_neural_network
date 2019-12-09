@@ -588,7 +588,6 @@ def load_word2vec_model():
         model = model.wv
 
         model.save(config['word2vec']['saved_model'])
-        model.save_word2vec_format(config['word2vec']['saved_model'] + "2")
 
     return model
 
