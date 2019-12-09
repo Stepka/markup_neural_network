@@ -376,7 +376,7 @@ def save_predictions(path, file_names, predictions):
         # log(filename[-3:])
         if filename[-3:] == 'ods':
             try:
-                df = read_ods(path + "/" + filename, 1)
+                df = read_ods(filename, 1)
                 df = df[~pd.isna(df[df.columns[0]])]
                 df = df.astype({df.columns[0]: str})
             except Exception as e:
@@ -387,7 +387,7 @@ def save_predictions(path, file_names, predictions):
         elif filename[-3:] == 'txt':
             try:
                 df = pd.DataFrame(np.array([]), columns=['texts'])
-                with open(path + "/" + filename, encoding='utf-8') as f:
+                with open(filename, encoding='utf-8') as f:
                     lines = f.readlines()
 
                 texts = []
@@ -412,10 +412,10 @@ def save_predictions(path, file_names, predictions):
 
         # df = df.drop('label 1', axis=1)
 
-        dir_name = os.path.dirname(filename)
-        if not os.path.exists(data_root_path + "Predictions" + "/" + dir_name):
-            os.mkdir(data_root_path + "Predictions" + "/" + dir_name)
-        df.to_csv(data_root_path + "Predictions" + "/" + filename[:-3] + "csv")
+        # dir_name = os.path.dirname(filename)
+        # if not os.path.exists(data_root_path + "Predictions" + "/" + dir_name):
+        #     os.mkdir(data_root_path + "Predictions" + "/" + dir_name)
+        df.to_csv(data_root_path + "Predictions" + "/" + os.path.basename(filename)[:-3] + "csv")
 
     log("Filling files with predictions finished")
 
@@ -423,7 +423,7 @@ def save_predictions(path, file_names, predictions):
 
 
 # get all files for testing, fill with predictions, check with exist labels and save
-def save_test_results(path, file_names, predictions, true_classes, lemmatized_paragraphs):
+def save_test_results(file_names, predictions, true_classes, lemmatized_paragraphs):
 
     log("Filling test files with test predictions started...")
 
@@ -482,7 +482,7 @@ def save_test_results(path, file_names, predictions, true_classes, lemmatized_pa
     for filename in file_names:
         #     log(filename)
         try:
-            df = read_ods(path + "/" + filename, 1)
+            df = read_ods(filename, 1)
             df = df[~pd.isna(df[df.columns[0]])]
             df = df.astype({df.columns[0]: str})
 
@@ -493,7 +493,7 @@ def save_test_results(path, file_names, predictions, true_classes, lemmatized_pa
             df['n_grams'] = n_grams_str[last_filled_df_size:last_filled_df_size+len(df)]
             last_filled_df_size += len(df)
 
-            df.to_csv(data_root_path + "Testing" + "/" + filename[:-3] + "csv")
+            df.to_csv(data_root_path + "Testing" + "/" + os.path.basename(filename)[:-3] + "csv")
         except Exception as e:
             log("Error on file")
             log(e)
@@ -710,12 +710,12 @@ def train():
 
         classifier_model.train(input_fn=train_input_fn, steps=config['classifier']['steps'])
 
-    test(classifier_model, train_and_test_path, test_file_names)
+    test(classifier_model, test_file_names)
 
     return classifier_model
 
 
-def test(classifier_model, train_and_test_path, test_file_names):
+def test(classifier_model, test_file_names):
 
     if START_STAGE >= 4:
         pass
@@ -740,7 +740,7 @@ def test(classifier_model, train_and_test_path, test_file_names):
 
         testing_result = classifier_model.predict(input_fn=test_input_fn)
 
-        save_test_results(train_and_test_path, test_file_names, testing_result, y_test, lemmatized_paragraphs)
+        save_test_results(test_file_names, testing_result, y_test, lemmatized_paragraphs)
 
 
 def predict(classifier_model, texts=None):
