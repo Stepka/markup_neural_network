@@ -243,7 +243,7 @@ def load_charters(file_names):
 
         else:
             raise Exception('Wrong files', 'Not supported file extension. Supported extensions are: "ods", "csv"')
-
+    print(texts)
     return pre_labels, texts
 
 
