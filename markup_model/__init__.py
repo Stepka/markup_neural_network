@@ -213,7 +213,7 @@ def load_charters(file_names):
 
     log("Extracting texts...")
     for filename in file_names:
-        log(filename)
+        # log(filename)
         if filename[-3:] == 'ods':
             try:
                 df = read_ods(filename, 1)
@@ -257,7 +257,7 @@ def load_charters(file_names):
 
         else:
             raise Exception('Wrong files', 'Not supported file extension. Supported extensions are: "ods", "csv"')
-    print(texts)
+
     return pre_labels, texts
 
 
@@ -569,7 +569,6 @@ def load_word2vec_model():
         train_and_test_file_names = []
         for path, sub_dirs, files in os.walk(train_and_test_path):
             for name in files:
-                print(name, os.path.join(path, name))
                 if os.path.isfile(os.path.join(path, name)):
                     train_and_test_file_names.append(os.path.join(path, name))
 
