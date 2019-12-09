@@ -186,10 +186,10 @@ def get_onehot(paragraph):
             word_embedding = word2vec[word]
             word_cluster = kmeans.predict([word_embedding])
             onehot.itemset(word_cluster[0], 1)
-            log(word)
-            log(word_cluster)
-            log(word2vec.similar_by_vector(kmeans.cluster_centers_[word_cluster[0]], 3))
-            log('\n')
+        #             log(word)
+        #             log(word_cluster)
+        #             log(word2vec.similar_by_vector(kmeans.cluster_centers_[word_cluster[0]], 3))
+        #             log('\n')
         else:
             # Увы!
             #             log('"' + word + ' is not present in the model')
@@ -581,7 +581,7 @@ def load_word2vec_model():
 
         t = time()
         model.train(lemmatized_paragraphs, total_examples=model.corpus_count, epochs=30, report_delay=1)
-        log('Time to train the model: {} mins'.format(round((time() - t) / 60, 2)))
+        log('Time to train the model: {} mins, vocab size: {}'.format(round((time() - t) / 60, 2), len(model.wv)))
 
         model.init_sims(replace=True)
 
