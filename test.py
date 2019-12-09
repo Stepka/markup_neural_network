@@ -1,6 +1,6 @@
 from time import time
 import gzip
-import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
 
 
 if __name__ == '__main__':
@@ -19,27 +19,17 @@ if __name__ == '__main__':
 
             file_content = f.read()
 
-            file_content = magic + '<root>' + file_content + '</root>'
+            # file_content = magic + '<root>' + file_content + '</root>'
 
             print(file_content)
 
             print("-----------------------------------")
 
-            root = ET.fromstring(file_content)
+            soup = BeautifulSoup(file_content, 'html.parser')
 
-            body_content = root.find("./body").text
-            body_content = magic + '<root>' + body_content + '</root>'
+            for child in soup.find_all('p'):
+                print(child.contents)
 
-            print(body_content)
-
-            body_root = ET.fromstring(body_content)
-            for child in body_root.findall("./p"):
-                print(child.tag, child.text)
-
-            print("-----------------------------------")
-
-            for child in root:
-                print(child.tag, child.attrib)
 
         print('Total time: {} mins'.format(round((time() - start_time) / 60, 2)))
 
