@@ -211,7 +211,7 @@ def load_charters(path, file_names):
 
     log("Extracting texts...")
     for filename in file_names:
-        # log(filename[-3:])
+        log(filename)
         if filename[-3:] == 'ods':
             try:
                 df = read_ods(path + "/" + filename, 1)
