@@ -549,7 +549,8 @@ def load_word2vec_model():
             workers=cores-1
         )
 
-        train_and_test_path = data_root_path + "Train"
+        # train_and_test_path = data_root_path + "Train"
+        train_and_test_path = config['word2vec']['train_path']
         train_and_test_file_names = [f for f in os.listdir(train_and_test_path) if os.path.isfile(os.path.join(train_and_test_path, f))]
         pre_labels, texts = load_charters(train_and_test_path, train_and_test_file_names)
         lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
