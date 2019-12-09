@@ -21,8 +21,8 @@ if __name__ == '__main__':
 
             root = ET.fromstring(file_content)
 
-            # Top-level elements
-            root.findall(".")
+            for child in root.findall("./body"):
+                print(child.tag, child.attrib)
 
             print("-----------------------------------")
 
