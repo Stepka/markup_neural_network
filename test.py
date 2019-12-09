@@ -28,7 +28,7 @@ if __name__ == '__main__':
             soup = BeautifulSoup(file_content, 'html.parser')
 
             for child in soup.find_all('p'):
-                print(child.contents)
+                print(child)
 
 
         print('Total time: {} mins'.format(round((time() - start_time) / 60, 2)))
