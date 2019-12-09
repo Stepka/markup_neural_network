@@ -186,10 +186,10 @@ def get_onehot(paragraph):
             word_embedding = word2vec[word]
             word_cluster = kmeans.predict([word_embedding])
             onehot.itemset(word_cluster[0], 1)
-        #             log(word)
-        #             log(word_cluster)
-        #             log(word2vec.similar_by_vector(kmeans.cluster_centers_[word_cluster[0]], 3))
-        #             log('\n')
+            log(word)
+            log(word_cluster)
+            log(word2vec.similar_by_vector(kmeans.cluster_centers_[word_cluster[0]], 3))
+            log('\n')
         else:
             # Увы!
             #             log('"' + word + ' is not present in the model')
