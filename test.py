@@ -14,9 +14,6 @@ if __name__ == '__main__':
                 print("Line {}: {}".format(cnt, line.strip()))
                 cnt += 1
 
-                if cnt > 10:
-                    break
-
         print('Total time: {} mins'.format(round((time() - start_time) / 60, 2)))
 
     except Exception as e:
