@@ -10,14 +10,13 @@ if __name__ == '__main__':
 
         filepath = 'data/justice/33m-russian-courts-cases-by-suvorov/arb_sud/vysshij-arbitrazhnyj-sud-rf-40001/2013/306465818.xml.gz'
         with gzip.open(filepath, 'rt') as f:
-            cnt = 1
-            for line in f:
-                print("Line {}: {}".format(cnt, line.strip()))
-                cnt += 1
+
+            file_content = f.read()
+
+            print(file_content)
 
             print("-----------------------------------")
 
-            file_content = f.read()
             root = ET.fromstring(file_content)
 
             # Top-level elements
