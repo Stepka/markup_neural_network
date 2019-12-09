@@ -27,7 +27,11 @@ if __name__ == '__main__':
 
             soup = BeautifulSoup(file_content, 'html.parser')
 
-            body_soup = BeautifulSoup(soup.body, 'html.parser')
+            print(soup.body)
+
+            print("-----------------------------------")
+
+            body_soup = BeautifulSoup(soup.body.string, 'html.parser')
 
             # for child in soup.find_all('p'):
             #     print(child)
