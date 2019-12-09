@@ -581,7 +581,7 @@ def load_word2vec_model():
 
         t = time()
         model.train(lemmatized_paragraphs, total_examples=model.corpus_count, epochs=30, report_delay=1)
-        log('Time to train the model: {} mins}'.format(round((time() - t) / 60, 2)))
+        log('Time to train the model: {} mins'.format(round((time() - t) / 60, 2)))
 
         model.init_sims(replace=True)
 
