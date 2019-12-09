@@ -1,5 +1,6 @@
 from time import time
 import gzip
+import xml.etree.ElementTree as ET
 
 
 if __name__ == '__main__':
@@ -13,6 +14,19 @@ if __name__ == '__main__':
             for line in f:
                 print("Line {}: {}".format(cnt, line.strip()))
                 cnt += 1
+
+            print("-----------------------------------")
+
+            file_content = f.read()
+            root = ET.fromstring(file_content)
+
+            # Top-level elements
+            root.findall(".")
+
+            print("-----------------------------------")
+
+            for child in root:
+                print(child.tag, child.attrib)
 
         print('Total time: {} mins'.format(round((time() - start_time) / 60, 2)))
 
