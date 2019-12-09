@@ -555,9 +555,8 @@ def load_word2vec_model():
         train_and_test_file_names = []
         for path, sub_dirs, files in os.walk(train_and_test_path):
             for name in files:
-                print(name, os.path.join(path, name))
                 if os.path.isfile(os.path.join(path, name)):
-                    train_and_test_file_names.extend(os.path.join(path, name))
+                    train_and_test_file_names.append(os.path.join(path, name))
 
         pre_labels, texts = load_charters(train_and_test_file_names)
         lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
@@ -641,7 +640,7 @@ def train():
     for path, sub_dirs, files in os.walk(train_and_test_path):
         for name in files:
             if os.path.isfile(os.path.join(path, name)):
-                train_and_test_file_names.extend(os.path.join(path, name))
+                train_and_test_file_names.append(os.path.join(path, name))
 
     if len(train_and_test_file_names) > 0:
         test_file_names = random.choices(train_and_test_file_names, k=int(0.2 * len(train_and_test_file_names)))
@@ -784,7 +783,7 @@ def predict(classifier_model, texts=None):
             for path, sub_dirs, files in os.walk(prediction_path):
                 for name in files:
                     if os.path.isfile(os.path.join(path, name)):
-                        all_prediction_file_names.extend(os.path.join(path, name))
+                        all_prediction_file_names.append(os.path.join(path, name))
             all_prediction_file_names.sort()
 
 
