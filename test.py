@@ -13,6 +13,8 @@ if __name__ == '__main__':
 
             file_content = f.read()
 
+            file_content = '<root>' + file_content + '</root>'
+
             print(file_content)
 
             print("-----------------------------------")
