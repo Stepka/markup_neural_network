@@ -1,6 +1,5 @@
-from markup_service import init, get_markup
-import argparse
 from time import time
+import gzip
 
 
 if __name__ == '__main__':
@@ -8,15 +7,11 @@ if __name__ == '__main__':
     start_time = time()
     try:
 
-        # init
-
-        filepath = 'data/justice/33m-russian-courts-cases-by-suvorov/arb_sud.txt'
-        with open(filepath) as fp:
-            line = fp.readline()
+        filepath = 'data/justice/33m-russian-courts-cases-by-suvorov/arb_sud/vysshij-arbitrazhnyj-sud-rf-40001/2013/306465818.xml.gz'
+        with gzip.open(filepath, 'rt') as f:
             cnt = 1
-            while line:
+            for line in f:
                 print("Line {}: {}".format(cnt, line.strip()))
-                line = fp.readline()
                 cnt += 1
 
                 if cnt > 10:
