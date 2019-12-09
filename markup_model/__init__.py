@@ -555,6 +555,7 @@ def load_word2vec_model():
         train_and_test_file_names = []
         for path, sub_dirs, files in os.walk(train_and_test_path):
             for name in files:
+                print(name, os.path.join(path, name))
                 if os.path.isfile(os.path.join(path, name)):
                     train_and_test_file_names.extend(os.path.join(path, name))
 
