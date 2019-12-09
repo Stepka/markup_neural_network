@@ -22,7 +22,8 @@ if __name__ == '__main__':
             root = ET.fromstring(file_content)
 
             body_content = root.find("./body").text
-            print(body_content)
+            body_content = '<root>' + body_content + '</root>'
+
             body_root = ET.fromstring(body_content)
             for child in body_root.findall("./p"):
                 print(child.tag, child.text)
