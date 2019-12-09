@@ -256,7 +256,7 @@ def load_charters(file_names):
                 log(filename)
 
         else:
-            raise Exception('Wrong files', 'Not supported file extension. Supported extensions are: "ods", "csv"')
+            log('Wrong file: {}'.format(filename), 'Not supported file extension. Supported extensions are: "ods", "csv", "xml.gz"')
 
     return pre_labels, texts
 
