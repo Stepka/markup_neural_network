@@ -581,13 +581,14 @@ def load_word2vec_model():
 
         t = time()
         model.train(lemmatized_paragraphs, total_examples=model.corpus_count, epochs=30, report_delay=1)
-        log('Time to train the model: {} mins, vocab size: {}'.format(round((time() - t) / 60, 2), len(model.wv)))
+        log('Time to train the model: {} mins}'.format(round((time() - t) / 60, 2)))
 
         model.init_sims(replace=True)
 
         model = model.wv
 
         model.save(config['word2vec']['saved_model'])
+        model.save_word2vec_format(config['word2vec']['saved_model'] + "2")
 
     return model
 
