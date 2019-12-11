@@ -584,7 +584,7 @@ def load_word2vec_model():
             lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
 
             t = time()
-            model.build_vocab(lemmatized_paragraphs, update=True, progress_per=10000)
+            model.build_vocab(lemmatized_paragraphs, update=(i > 0), progress_per=10000)
             log('Time to build vocab: {} mins, vocab size: {}'.format(round((time() - t) / 60, 2), len(model.wv.vocab)))
 
             t = time()
