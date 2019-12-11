@@ -585,7 +585,7 @@ def load_word2vec_model():
 
             t = time()
             model.build_vocab(lemmatized_paragraphs, progress_per=10000)
-            log('Time to build vocab: {} mins, vocab size: {}'.format(round((time() - t) / 60, 2), model.corpus_count))
+            log('Time to build vocab: {} mins, vocab size: {}'.format(round((time() - t) / 60, 2), len(model.wv.vocab)))
 
             t = time()
             model.train(lemmatized_paragraphs, total_examples=model.corpus_count, epochs=30, report_delay=1)
