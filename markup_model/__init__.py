@@ -572,10 +572,11 @@ def load_word2vec_model():
                 if os.path.isfile(os.path.join(path, name)):
                     train_and_test_file_names.append(os.path.join(path, name))
 
-        predict_batch_size = 500
+        predict_batch_size = 100
         predict_batch_num = int(len(train_and_test_file_names) / predict_batch_size) + 1
         for i in range(predict_batch_num):
 
+            batch_time = time()
             log("Batch {} from {}".format(i+1, predict_batch_num))
 
             batch_file_names = train_and_test_file_names[i * predict_batch_size:(i + 1) * predict_batch_size]
@@ -592,6 +593,8 @@ def load_word2vec_model():
             log('Time to train the model: {} mins'.format(round((time() - t) / 60, 2)))
 
             model.wv.save(config['word2vec']['saved_model'] + "_bckp")
+
+            log('Batch time: {} mins'.format(round((time() - batch_time) / 60, 2)))
 
         model.init_sims(replace=True)
 
