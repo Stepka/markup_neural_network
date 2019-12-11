@@ -572,16 +572,24 @@ def load_word2vec_model():
                 if os.path.isfile(os.path.join(path, name)):
                     train_and_test_file_names.append(os.path.join(path, name))
 
-        pre_labels, texts = load_charters(train_and_test_file_names)
-        lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
+        predict_batch_size = 500
+        predict_batch_num = int(len(train_and_test_file_names) / predict_batch_size) + 1
+        for i in range(predict_batch_num):
 
-        t = time()
-        model.build_vocab(lemmatized_paragraphs, progress_per=10000)
-        log('Time to build vocab: {} mins'.format(round((time() - t) / 60, 2)))
+            log("Batch {} from {}".format(i+1, predict_batch_num))
 
-        t = time()
-        model.train(lemmatized_paragraphs, total_examples=model.corpus_count, epochs=30, report_delay=1)
-        log('Time to train the model: {} mins'.format(round((time() - t) / 60, 2)))
+            batch_file_names = train_and_test_file_names[i * predict_batch_size:(i + 1) * predict_batch_size]
+
+            pre_labels, texts = load_charters(batch_file_names)
+            lemmatized_paragraphs, pre_labels = parse_charters(pre_labels, texts)
+
+            t = time()
+            model.build_vocab(lemmatized_paragraphs, progress_per=10000)
+            log('Time to build vocab: {} mins, vocab size: {}'.format(round((time() - t) / 60, 2), model.corpus_count))
+
+            t = time()
+            model.train(lemmatized_paragraphs, total_examples=model.corpus_count, epochs=30, report_delay=1)
+            log('Time to train the model: {} mins'.format(round((time() - t) / 60, 2)))
 
         model.init_sims(replace=True)
 
@@ -800,7 +808,6 @@ def predict(classifier_model, texts=None):
                     if os.path.isfile(os.path.join(path, name)):
                         all_prediction_file_names.append(os.path.join(path, name))
             all_prediction_file_names.sort()
-
 
             predict_batch_size = 500
             predict_batch_num = int(len(all_prediction_file_names) / predict_batch_size) + 1
