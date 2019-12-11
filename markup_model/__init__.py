@@ -572,7 +572,7 @@ def load_word2vec_model():
                 if os.path.isfile(os.path.join(path, name)):
                     train_and_test_file_names.append(os.path.join(path, name))
 
-        predict_batch_size = 500
+        predict_batch_size = 20
         predict_batch_num = int(len(train_and_test_file_names) / predict_batch_size) + 1
         for i in range(predict_batch_num):
 
